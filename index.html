@@ -10,10 +10,36 @@
   </head>
   <body>
     <div id="app">
-      <h1>Product goes here</h1>
+      <div class="nav-bar"></div>
+
+
+      <div class="product-display">
+        <div class="product-container">
+          <div class="product-image">
+            <!-- Images goes here -->
+            <img :src="image" alt="">
+          </div> <!-- Il v-bind mi permette di creare un collegamento con  l'attributo html e il data object in js. Associo dinamicamente un attributo a un'espressione. In questo caso l'attrivìbuto è 'src' e l'espressione 'image' o quello che c'è negli apici. Quello che è contenuto tra gli apici possiamo riportrlo con il doppio baffo. -->
+          <div class="product-info">
+            <h1> {{product}}</h1> <!-- Con il baffo importo il valore del data option 'product, in mod che possa essere visibile nel DOM. In questo modo il fil Html e js sono collegati. Tutto tramite il mountedApp e il div#app  -->
+            <p>{{description}}</p>
+
+            <!-- <p v-if="inStock">In Stock</p> creiamo una condizione che ci permette di mostrare o meno uno dei due tag p a seconda che sia vero o falso.
+            <p v-else>Out of Stock</p> Spesso non è necessario includere un v-else dopo un v-if  -->
+
+            <p v-show>In Stock</p>
+
+            <!-- <a :href="url">Google</a> -->
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Import Js -->
     <script src="./main.js"></script>
+
+    <!-- Mount App -->
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
   </body>
 </html>
