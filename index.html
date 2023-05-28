@@ -12,28 +12,29 @@
     <div id="app">
       <div class="nav-bar"></div>
 
+      <div class="cart">Cart({{cart}})</div> <!--Espressione che mi stampa il valore di 'cart' nel DOM-->
 
       <div class="product-display">
         <div class="product-container">
           <div class="product-image">
             <!-- Images goes here -->
             <img :src="image" alt="">
-          </div> <!-- Il v-bind mi permette di creare un collegamento con  l'attributo html e il data object in js. Associo dinamicamente un attributo a un'espressione. In questo caso l'attrivìbuto è 'src' e l'espressione 'image' o quello che c'è negli apici. Quello che è contenuto tra gli apici possiamo riportrlo con il doppio baffo. -->
+          </div> <!-- Il v-bind mi permette di creare un collegamento con  l'attributo html e il data object in js. Associo dinamicamente un attributo a un'espressione. In questo caso l'attributo è 'src' e l'espressione è 'image' o quello che c'è negli apici. Quello che è contenuto tra gli apici possiamo riportrlo con il doppio baffo(?). -->
           <div class="product-info">
-            <h1> {{product}}</h1> <!-- Con il baffo importo il valore del data option 'product, in mod che possa essere visibile nel DOM. In questo modo il fil Html e js sono collegati. Tutto tramite il mountedApp e il div#app  -->
+            <h1> {{product}}</h1> <!-- Con il baffo importo il valore del data option 'product', in modo che possa essere visibile nel DOM. In questo modo il file Html e js sono collegati. Tutto tramite il mountedApp e il div#app  -->
             <p>{{description}}</p>
 
-            <p v-if="inStock">In Stock</p> <!--creiamo una condizione che ci permette di mostrare o meno uno dei due tag p a seconda che sia vero o falso.-->
+            <p v-if="inStock">In Stock</p> <!--Creiamo una condizione che ci permette di mostrare o meno uno dei due tag <p> a seconda che sia vero o falso.-->
             <!-- <p v-else-if="inventory <=10 && inventory > 0">Almost sold out!</p> Creo un altro livello per la condizione logica: con questa espressione logica voglio mostrare 'In Stock' se viene rispettata la condizione per cui ci sono un numero totale di 10 o meno oggetti e 'Out of Stock' se ce ne sono 0 -->
             <p v-else>Out of Stock</p> <!--Spesso non è necessario includere un v-else dopo un v-if  -->
 
             <!-- <p v-show="inStock">In Stock</p> Toggle usato per dare visibilità o meno ad un elemento -->
 
             <ul>
-              <li v-for="detail in details">{{detail}} </li> <!--V-FOR: In questo modo stiamo andando a creare una lista con elementi che andiamo a richiamare direttamente dall'array 'details' in js. Con l'espressione inserita nel doppio baffo, andiamo a prendere ogni elemento riportato all'interno dell'array e lo stampiamo nel nostro DOM. Lavora con un loop. 'details' è quello su cui vogliamo looppare e che si riferisce alla collezione 'details' dell'array in js. 'detail' in vece è l'alias per gli elementi all'interno dell'array su cui vogliamo iterare che vengono poi stampati tramite il doppio baffo-->
+              <li v-for="detail in details">{{detail}} </li> <!--V-FOR: In questo modo stiamo andando a creare una lista con elementi che andiamo a richiamare direttamente dall'array 'details' in js. Con l'espressione inserita nel doppio baffo, andiamo a prendere ogni elemento riportato all'interno dell'array e lo stampiamo nel nostro DOM. Lavora con un loop. '{{details}}' è quello su cui vogliamo looppare e che si riferisce alla collezione 'details' dell'array in js. 'detail' invece è l'alias per gli elementi all'interno dell'array su cui vogliamo iterare e che vengono poi stampati tramite il doppio baffo-->
             </ul>
-            <div v-for="variant in variants" .key="variant.id">{{variant.color}}</div>//per visualizzare un elemento specifico, invece di tutti quelli presenti nell'array, dobbiamo dargli una key. Tutto questo lo possiamo fare attraverso un v-bind di key a cui associamo gli attributi che ci interessano (Key attribute). Ogni chiave deve essere unica.
-
+            <div v-for="variant in variants" :key="variant.id" @mouseover="updateImage(variant.image)">{{variant.color}}</div> <!-- per visualizzare un elemento specifico, invece di tutti quelli presenti nell'array, dobbiamo dargli una key. Tutto questo lo possiamo fare attraverso un v-bind di key a cui associamo gli attributi che ci interessano (Key attribute). Ogni chiave deve essere unica. Aggiungendo l'Event Listener '@mouseover' permetto di creare un effetto hover come in css, ma applicandolo con Vue. In questo caso però devo creare un metodo da passargli, in questo caso "updateImage()" con all'interno l'argomento 'variant.image' -->
+            <button class="button" @click="addToCart">Add to Cart</button> <!--Devo applicare un evento che possa collegare button con il div cart. Uso la direttiva v-on(Event Listener) che qui usiamo con la shorthand '@', dove 'click' è l'evento e "cart += 1" è l'espressione che stiamo attivando. In questo modo incremento il valore di 'cart' di 1. Sostituisco l'espressione precedente con "addToCart" per andare a creare un method. Una volta completato, nel browser vedremo lo stesso identico comportamento di prima.-->
             <!-- <a :href="url">Google</a> -->
           </div>
         </div>
